@@ -244,10 +244,10 @@ class AsyncRequestManager(BaseRequestManager):
 
     async def request(self, url, method, *args, **kwargs):
         if isinstance(self.client, AsyncClient):
-            return self.client.request(method=method, url=url, *args, **kwargs)
+            return await self.client.request(method=method, url=url, *args, **kwargs)
 
         else:
-            raise TypeError("Данный клиент не поддерживает синхронную обработку.")
+            raise TypeError("Данный клиент не поддерживает асинхронную обработку.")
 
 
 class RequestManager(BaseRequestManager): ...

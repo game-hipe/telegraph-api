@@ -186,7 +186,9 @@ class BaseAccountMethods(ABC, Generic[T, _G]):
         return model(**kwargs)
 
 
-class BaseAsyncAccountMethods(BaseAccountMethods[AsyncRequestManager, AsyncClient]):
+class AsyncAccountMethods(BaseAccountMethods[AsyncRequestManager, AsyncClient]):
+    REQUEST_MANAGER = AsyncRequestManager
+
     @overload
     async def create_account(self, account: CreateAccount) -> Account:
         """

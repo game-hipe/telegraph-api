@@ -230,7 +230,7 @@ class BasePageMethods(ABC, Generic[T, _G]):
         return model(**kwargs)
 
 
-class BaseAsyncPageMethods(BasePageMethods[AsyncRequestManager, AsyncClient]):
+class AsyncPageMethods(BasePageMethods[AsyncRequestManager, AsyncClient]):
     HTTP_CLIENT = AsyncRequestManager
 
     @overload

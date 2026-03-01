@@ -1,5 +1,6 @@
-from typing import Optional, Literal, TypeAlias
-from pydantic import BaseModel, HttpUrl, Field, field_validator
+from typing import Literal, Optional, TypeAlias
+
+from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 SUPPORTED_FIELDS: TypeAlias = Literal[
     "short_name", "author_name", "author_url", "auth_url", "page_count"

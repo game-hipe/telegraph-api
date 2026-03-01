@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import json
+from typing import List, Optional
 
-from typing import Optional, List
-from pydantic import BaseModel, HttpUrl, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 
 from ..models.node import Node
 

@@ -1,1 +1,1 @@
-from ._client import Telegraph, AsyncTelegraph
+from ._client import AsyncTelegraph, Telegraph

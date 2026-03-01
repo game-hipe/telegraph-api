@@ -10,9 +10,6 @@ API - для работы с Telegraph
 Copyright (C) 2026
 """
 
-from .client import Telegraph, AsyncTelegraph
+from .client import AsyncTelegraph, Telegraph
 
-__all__ = [
-    "Telegraph",
-    "AsyncTelegraph"
-]
+__all__ = ["Telegraph", "AsyncTelegraph"]

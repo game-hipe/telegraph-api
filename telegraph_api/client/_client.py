@@ -1,25 +1,30 @@
-from typing import overload, Optional, List, Literal, Any, Dict, TypeVar
+from typing import Any, Dict, List, Literal, Optional, TypeVar, overload
 
-from httpx import Client, AsyncClient
-from pydantic import BaseModel
 from bs4 import BeautifulSoup
+from httpx import AsyncClient, Client
+from pydantic import BaseModel
 
-from ..abstract.interface import TelegraphInterface, AsyncTelegraphInterface
-from ..abstract.page import PageMethods, AsyncPageMethods
 from ..abstract.account import AccountMethods, AsyncAccountMethods
+from ..abstract.interface import AsyncTelegraphInterface, TelegraphInterface
+from ..abstract.page import AsyncPageMethods, PageMethods
 from ..entities.create.account import (
     CreateAccount,
     EditAccount,
     GetAccountInfo,
     RevokeAccessToken,
 )
-from ..entities.models import Account, Response, NodeElement, Page
-from ..entities.work.account import SyncAccount, AsyncAccount
-
 from ..entities.create.page import CreatePage, EditPage, GetPage, GetPageList, GetViews
-from ..entities.models import PageList, PageViews, Node
+from ..entities.models import (
+    Account,
+    Node,
+    NodeElement,
+    Page,
+    PageList,
+    PageViews,
+    Response,
+)
+from ..entities.work.account import AsyncAccount, SyncAccount
 from ..exc import TelegraphError
-
 
 _T = TypeVar("_T", bound=BaseModel)
 

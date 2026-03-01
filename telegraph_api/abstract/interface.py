@@ -1,4 +1,4 @@
-from typing import overload, Optional, List, Literal, Any
+from typing import Any, List, Literal, Optional, overload
 
 from ..entities.create.account import (
     CreateAccount,
@@ -6,8 +6,8 @@ from ..entities.create.account import (
     GetAccountInfo,
     RevokeAccessToken,
 )
-from ..entities.models import Account, Page, PageList, PageViews
 from ..entities.create.page import CreatePage, EditPage, GetPage, GetPageList, GetViews
+from ..entities.models import Account, Page, PageList, PageViews
 
 
 class TelegraphInterface:

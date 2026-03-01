@@ -1,9 +1,8 @@
-from typing import TypeAlias
 from enum import Enum
+from typing import TypeAlias
 from urllib.parse import urljoin
 
-from httpx import Client, AsyncClient, Response
-
+from httpx import AsyncClient, Client, Response
 
 ClientAlias: TypeAlias = Client | AsyncClient | None
 

@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import overload, Optional, List, Literal, Any
+from typing import Any, List, Literal, Optional, overload
 
 from pydantic import model_validator
 
-from ...abstract.interface import TelegraphInterface, AsyncTelegraphInterface
-from ...entities.models.account import Account as BaseAccount
-from ...entities.create.page import CreatePage, EditPage
-from ...entities.models import Page, PageList, PageViews
+from ...abstract.interface import AsyncTelegraphInterface, TelegraphInterface
 from ...entities.create.account import EditAccount, GetAccountInfo
-from ...entities.create.page import GetPage, GetPageList, GetViews
+from ...entities.create.page import CreatePage, EditPage, GetPage, GetPageList, GetViews
+from ...entities.models import Page, PageList, PageViews
+from ...entities.models.account import Account as BaseAccount
 
 
 class SyncAccount(BaseAccount):
@@ -29,7 +28,7 @@ class SyncAccount(BaseAccount):
         return self
 
     @overload
-    def edit_account(self, edit_account: EditAccount) -> BaseAccount: ...
+    def edit_account(self, edit_account: EditAccount) -> SyncAccount: ...
 
     @overload
     def edit_account(
@@ -38,22 +37,49 @@ class SyncAccount(BaseAccount):
         short_name: str,
         author_name: Optional[str] = None,
         author_url: Optional[str] = None,
-    ) -> BaseAccount: ...
+    ) -> SyncAccount: ...
 
-    def edit_account(self, *args, **kwargs) -> BaseAccount:
+    def edit_account(self, *args, **kwargs) -> SyncAccount:
         if len(args) == 1 and isinstance(args[0], EditAccount):
             account = args[0]
-            return self.telegraph.edit_account(
+            account = self.telegraph.edit_account(account)
+            return AsyncAccount(
+                short_name=self.short_name
+                if self.short_name == account.short_name
+                else account.short_name,
+                author_name=self.author_name
+                if self.author_name == account.author_name
+                else account.author_name,
+                author_url=self.author_url
+                if self.author_url == account.author_url
+                else account.author_url,
                 access_token=self.access_token,
-                short_name=account.short_name,
-                author_name=account.author_name,
-                author_url=str(account.author_url) if account.author_url else None,
+                auth_url=self.auth_url,
+                page_count=self.page_count,
+                telegraph=self.telegraph,
             )
-        return self.telegraph.edit_account(
+
+        account = self.telegraph.edit_account(
             access_token=self.access_token,
             short_name=kwargs["short_name"],
             author_name=kwargs.get("author_name"),
-            author_url=str(kwargs.get("author_url")),
+            author_url=kwargs.get("author_url"),
+        )
+
+        return SyncAccount(
+            short_name=self.short_name
+            if self.short_name == account.short_name
+            else account.short_name,
+            author_name=self.author_name
+            if self.author_name == account.author_name
+            else account.author_name,
+            author_url=self.author_url
+            if self.author_url == account.author_url
+            else account.author_url,
+            access_token=self.access_token,
+            auth_url=self.auth_url,
+            page_count=self.page_count,
+            telegraph=self.telegraph,
         )
 
     @overload
@@ -261,7 +287,7 @@ class AsyncAccount(BaseAccount):
     # --- Account Methods ---
 
     @overload
-    async def edit_account(self, edit_account: EditAccount) -> BaseAccount: ...
+    async def edit_account(self, edit_account: EditAccount) -> AsyncAccount: ...
 
     @overload
     async def edit_account(
@@ -270,22 +296,48 @@ class AsyncAccount(BaseAccount):
         short_name: str,
         author_name: Optional[str] = None,
         author_url: Optional[str] = None,
-    ) -> BaseAccount: ...
+    ) -> AsyncAccount: ...
 
-    async def edit_account(self, *args, **kwargs) -> BaseAccount:
+    async def edit_account(self, *args, **kwargs) -> AsyncAccount:
         if len(args) == 1 and isinstance(args[0], EditAccount):
             account = args[0]
-            return await self.telegraph.edit_account(
+            account = await self.telegraph.edit_account(account)
+            return AsyncAccount(
+                short_name=self.short_name
+                if self.short_name == account.short_name
+                else account.short_name,
+                author_name=self.author_name
+                if self.author_name == account.author_name
+                else account.author_name,
+                author_url=self.author_url
+                if self.author_url == account.author_url
+                else account.author_url,
                 access_token=self.access_token,
-                short_name=account.short_name,
-                author_name=account.author_name,
-                author_url=str(account.author_url) if account.author_url else None,
+                auth_url=self.auth_url,
+                page_count=self.page_count,
+                telegraph=self.telegraph,
             )
-        return await self.telegraph.edit_account(
+
+        account = await self.telegraph.edit_account(
             access_token=self.access_token,
             short_name=kwargs["short_name"],
             author_name=kwargs.get("author_name"),
             author_url=kwargs.get("author_url"),
+        )
+        return AsyncAccount(
+            short_name=self.short_name
+            if self.short_name == account.short_name
+            else account.short_name,
+            author_name=self.author_name
+            if self.author_name == account.author_name
+            else account.author_name,
+            author_url=self.author_url
+            if self.author_url == account.author_url
+            else account.author_url,
+            access_token=self.access_token,
+            auth_url=self.auth_url,
+            page_count=self.page_count,
+            telegraph=self.telegraph,
         )
 
     @overload

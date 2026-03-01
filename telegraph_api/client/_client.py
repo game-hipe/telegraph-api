@@ -4,6 +4,7 @@ from httpx import Client, AsyncClient
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
 
+from ..abstract.interface import TelegraphInterface, AsyncTelegraphInterface
 from ..abstract.page import PageMethods, AsyncPageMethods
 from ..abstract.account import AccountMethods, AsyncAccountMethods
 from ..entities.create.account import (
@@ -56,7 +57,7 @@ class BaseTelegraph:
         return nodes
 
 
-class Telegraph(AccountMethods, PageMethods, BaseTelegraph):
+class Telegraph(AccountMethods, PageMethods, BaseTelegraph, TelegraphInterface):
     BASE_FEATURES: str = "html.parser"
 
     def __init__(self, client: Optional[Client] = None):
@@ -360,7 +361,7 @@ class Telegraph(AccountMethods, PageMethods, BaseTelegraph):
         response = self._http.request(
             url=self._http.create_account,
             method="POST",
-            json=account.model_dump(mode="json")(),
+            json=account.model_dump(mode="json"),
         )
 
         response.raise_for_status()
@@ -472,7 +473,9 @@ class Telegraph(AccountMethods, PageMethods, BaseTelegraph):
         self._http.client.close()
 
 
-class AsyncTelegraph(AsyncAccountMethods, AsyncPageMethods, BaseTelegraph):
+class AsyncTelegraph(
+    AsyncAccountMethods, AsyncPageMethods, BaseTelegraph, AsyncTelegraphInterface
+):
     BASE_FEATURES: str = "html.parser"
 
     def __init__(self, client: Optional[AsyncClient] = None):

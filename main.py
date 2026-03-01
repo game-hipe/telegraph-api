@@ -1,21 +1,18 @@
 import asyncio
 
 
-from telegraph_api.client._client import Telegraph
-from telegraph_api.entities.work.account import SyncAccount
+from telegraph_api.client._client import AsyncTelegraph
 
 
 async def main():
-    with Telegraph() as client:
-        account = client.create_account(
+    async with AsyncTelegraph() as client:
+        account = await client.create_account(
             short_name="test",
             author_name="test",
             author_url="https://github.com/game-hipe",
         )
 
-        account = SyncAccount(**account.model_dump(), telegraph=client)
-
-        print(account.create_page(title="sex", html="<p>Hello, world!</p>"))
+        print(await account.create_page(title="test-sex", html="<p>Hello, world!</p>"))
 
         # page = await client.create_page(
         #    access_token=account.access_token,

@@ -14,6 +14,7 @@ from ..entities.create.account import (
     RevokeAccessToken,
 )
 from ..entities.models import Account, Response, NodeElement, Page
+from ..entities.work.account import SyncAccount, AsyncAccount
 
 from ..entities.create.page import CreatePage, EditPage, GetPage, GetPageList, GetViews
 from ..entities.models import PageList, PageViews, Node
@@ -64,7 +65,7 @@ class Telegraph(AccountMethods, PageMethods, BaseTelegraph, TelegraphInterface):
         super().__init__(client)
 
     @overload
-    def create_account(self, account: CreateAccount) -> Account:
+    def create_account(self, account: CreateAccount) -> SyncAccount:
         """
         Создание нового аккаунта Telegraph.
 
@@ -82,7 +83,7 @@ class Telegraph(AccountMethods, PageMethods, BaseTelegraph, TelegraphInterface):
         short_name: str,
         author_name: Optional[str] = None,
         author_url: Optional[str] = None,
-    ) -> Account:
+    ) -> SyncAccount:
         """
         Создание нового аккаунта Telegraph.
 
@@ -365,8 +366,11 @@ class Telegraph(AccountMethods, PageMethods, BaseTelegraph, TelegraphInterface):
         )
 
         response.raise_for_status()
+        json = response.json()
+        if json.get("result"):
+            json["result"] |= {"telegraph": self}
 
-        return self._to_model(Account, response.json())
+        return self._to_model(SyncAccount, json)
 
     def create_page(self, *args, **kwargs):
         page = self._make_create_page(*args, **kwargs)
@@ -482,7 +486,7 @@ class AsyncTelegraph(
         super().__init__(client or AsyncClient())
 
     @overload
-    async def create_account(self, account: CreateAccount) -> Account:
+    async def create_account(self, account: CreateAccount) -> AsyncAccount:
         """
         Создание нового аккаунта Telegraph.
 
@@ -500,7 +504,7 @@ class AsyncTelegraph(
         short_name: str,
         author_name: Optional[str] = None,
         author_url: Optional[str] = None,
-    ) -> Account:
+    ) -> AsyncAccount:
         """
         Создание нового аккаунта Telegraph.
 
@@ -783,8 +787,11 @@ class AsyncTelegraph(
         )
 
         response.raise_for_status()
+        json = response.json()
+        if json.get("result"):
+            json["result"] |= {"telegraph": self}
 
-        return self._to_model(Account, response.json())
+        return self._to_model(AsyncAccount, json)
 
     async def create_page(self, *args, **kwargs):
         page = self._make_create_page(*args, **kwargs)
@@ -794,7 +801,7 @@ class AsyncTelegraph(
         response = await self._http.request(
             url=self._http.create_page,
             method="POST",
-            json=page.model_dump(exclude=["html"]),
+            json=page.model_dump(exclude=["html"], mode="json"),
         )
         response.raise_for_status()
 

@@ -53,7 +53,7 @@ class SyncAccount(BaseAccount):
             access_token=self.access_token,
             short_name=kwargs["short_name"],
             author_name=kwargs.get("author_name"),
-            author_url=kwargs.get("author_url"),
+            author_url=str(kwargs.get("author_url")),
         )
 
     @overload
@@ -354,7 +354,7 @@ class AsyncAccount(BaseAccount):
             access_token=self.access_token,
             title=kwargs["title"],
             author_name=kwargs.get("author_name", self.author_name),
-            author_url=kwargs.get("author_url", self.author_url),
+            author_url=str(kwargs.get("author_url", self.author_url)),
             content=kwargs.get("content"),
             html=kwargs.get("html"),
             return_content=kwargs.get("return_content", False),

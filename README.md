@@ -6,6 +6,11 @@
 2. Поддержка Pydantic.
 3. Более приятный DX, работа как с ORM
 
+## How to Download (Как скачать?)
+```bash
+pip install "git+https://github.com/game-hipe/telegraph-api.git" # Вуаля!
+```
+
 ## Example (Примеры)
 ```python
 from telegraph_api import Telegraph

@@ -26,10 +26,6 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-        
-    - name: Configuration Settings
-      run: |
-        cp config-example.yaml config.yaml
     
     - name: Install dependencies
       run: |

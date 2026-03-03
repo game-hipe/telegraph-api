@@ -1,3 +1,5 @@
+"""Методы аккаунтов"""
+
 from abc import ABC, abstractmethod
 from typing import Generic, List, Literal, Optional, TypeVar, overload
 

@@ -1,3 +1,5 @@
+"""Интерфейсы Telegraph"""
+
 from typing import Any, List, Literal, Optional, overload
 
 from ..entities.create.account import (

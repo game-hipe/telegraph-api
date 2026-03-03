@@ -1,3 +1,5 @@
+"""Методы для страниц"""
+
 from abc import ABC, abstractmethod
 from typing import Generic, List, Optional, TypeVar, overload
 

@@ -1,3 +1,5 @@
+"""Клиенты Telegraph"""
+
 from typing import Any, Dict, List, Literal, Optional, TypeVar, overload
 
 from bs4 import BeautifulSoup

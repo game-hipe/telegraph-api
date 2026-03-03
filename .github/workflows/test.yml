@@ -4,9 +4,10 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch: # Добавляет кнопку ручного запуска
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Workflow triggered by tag push!"
+      - run: echo "Workflow triggered!"

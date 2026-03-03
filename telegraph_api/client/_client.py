@@ -259,7 +259,7 @@ class Telegraph(AccountMethods, PageMethods, BaseTelegraph, TelegraphInterface):
         content: Optional[List[Node]] = None,
         html: Optional[str] = None,
         return_content: bool = False,
-    ):
+    ) -> Page:
         """
         Редактирование существующей страницы Telegraph.
 

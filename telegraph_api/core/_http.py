@@ -18,7 +18,7 @@ class AccountEndpoints(Enum):
     """
 
     CREATE_ACCOUNT = "/createAccount"
-    """Создание нового аккаунта. 
+    """Создание нового аккаунта.
     Используется для регистрации нового аккаунта в системе Telegraph.
     """
 

@@ -110,8 +110,15 @@ class SyncAccount(BaseAccount):
             fields=kwargs.get("fields"),
         )
 
-    def revoke_access_token(self) -> BaseAccount:
-        return self.telegraph.revoke_access_token(access_token=self.access_token)
+    def revoke_access_token(self) -> SyncAccount:
+        result = self.telegraph.revoke_access_token(access_token=self.access_token)
+
+        return SyncAccount(
+            **(
+                self.model_dump(mode="json", exclude=["telegraph"])
+                | {"access_token": result.access_token, "telegraph": self.telegraph}
+            )
+        )
 
     # --- Page Methods ---
 
@@ -137,9 +144,7 @@ class SyncAccount(BaseAccount):
                 access_token=self.access_token,
                 title=page.title,
                 author_name=page.author_name or self.author_name,
-                author_url=str(page.author_url)
-                if page.author_url
-                else None or self.author_url,
+                author_url=page.author_url or self.author_url,
                 content=page.content,
                 html=page.html,
                 return_content=page.return_content,
@@ -368,8 +373,17 @@ class AsyncAccount(BaseAccount):
             fields=kwargs.get("fields"),
         )
 
-    async def revoke_access_token(self) -> BaseAccount:
-        return await self.telegraph.revoke_access_token(access_token=self.access_token)
+    async def revoke_access_token(self) -> AsyncAccount:
+        result = await self.telegraph.revoke_access_token(
+            access_token=self.access_token
+        )
+
+        return AsyncAccount(
+            **(
+                self.model_dump(mode="json", exclude=["telegraph"])
+                | {"access_token": result.access_token, "telegraph": self.telegraph}
+            )
+        )
 
     # --- Page Methods ---
 
@@ -395,9 +409,7 @@ class AsyncAccount(BaseAccount):
                 access_token=self.access_token,
                 title=page.title,
                 author_name=page.author_name or self.author_name,
-                author_url=str(page.author_url)
-                if page.author_url
-                else None or self.author_url,
+                author_url=page.author_url or self.author_url,
                 content=page.content,
                 html=page.html,
                 return_content=page.return_content,
@@ -406,7 +418,7 @@ class AsyncAccount(BaseAccount):
             access_token=self.access_token,
             title=kwargs["title"],
             author_name=kwargs.get("author_name", self.author_name),
-            author_url=str(kwargs.get("author_url", self.author_url)),
+            author_url=kwargs.get("author_url", self.author_url),
             content=kwargs.get("content"),
             html=kwargs.get("html"),
             return_content=kwargs.get("return_content", False),

@@ -87,7 +87,10 @@ class BaseRequestManager:
     """
 
     BASE_URL = "https://api.telegra.ph"
-    """Базовый URL API Telegraph. Используется для построения полных адресов эндпоинтов."""
+    """
+    Базовый URL API Telegraph.
+    Используется для построения полных адресов эндпоинтов.
+    """
 
     def __init__(self, client: ClientAlias) -> None:
         """
@@ -226,7 +229,7 @@ class BaseRequestManager:
 
     def request(self, url: str, method: str, *args, **kwargs) -> Response:
         if isinstance(self.client, Client):
-            return self.client.request(method=method, url=url, *args, **kwargs)
+            return self.client.request(*args ,method=method, url=url, **kwargs)
 
         else:
             raise TypeError("Данный клиент не поддерживает синхронную обработку.")
@@ -243,7 +246,7 @@ class AsyncRequestManager(BaseRequestManager):
 
     async def request(self, url, method, *args, **kwargs):
         if isinstance(self.client, AsyncClient):
-            return await self.client.request(method=method, url=url, *args, **kwargs)
+            return await self.client.request(*args, method=method, url=url, **kwargs)
 
         else:
             raise TypeError("Данный клиент не поддерживает асинхронную обработку.")

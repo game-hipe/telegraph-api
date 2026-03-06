@@ -569,7 +569,7 @@ class TestAsyncORM:
         assert account.author_name == "GameHipe"
         assert str(account.author_url) == "https://github.com/game-hipe/telegraph-api"
 
-    @pytest.mark.asyncio
+    @pytest_asyncio.fixture(scope="function")
     async def test_get_page_list(self, created_account: AsyncAccount):
         # Создадим несколько страниц
         for i in range(3):

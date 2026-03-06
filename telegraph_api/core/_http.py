@@ -229,7 +229,7 @@ class BaseRequestManager:
 
     def request(self, url: str, method: str, *args, **kwargs) -> Response:
         if isinstance(self.client, Client):
-            return self.client.request(*args ,method=method, url=url, **kwargs)
+            return self.client.request(*args, method=method, url=url, **kwargs)
 
         else:
             raise TypeError("Данный клиент не поддерживает синхронную обработку.")

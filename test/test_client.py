@@ -291,6 +291,7 @@ class TestAccountORM(BaseTest):
         assert str(account.author_url) == "https://github.com/game-hipe"
 
 
+@pytest.mark.asyncio(loop_scope="class")
 class TestAsyncClient:
     @pytest_asyncio.fixture
     def telegraph(self) -> AsyncTelegraph:
@@ -569,7 +570,6 @@ class TestAsyncORM:
         assert account.author_name == "GameHipe"
         assert str(account.author_url) == "https://github.com/game-hipe/telegraph-api"
 
-    @pytest_asyncio.fixture(scope="function")
     async def test_get_page_list(self, created_account: AsyncAccount):
         # Создадим несколько страниц
         for i in range(3):

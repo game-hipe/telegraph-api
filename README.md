@@ -8,7 +8,7 @@
 
 ## How to Download (Как скачать?)
 ```bash
-pip install "pip install api-telegraph" # Вуаля!
+pip install api-telegraph # Вуаля!
 ```
 
 ## Example (Примеры)

@@ -8,7 +8,7 @@
 
 ## How to Download (Как скачать?)
 ```bash
-pip install "git+https://github.com/game-hipe/telegraph-api.git" # Вуаля!
+pip install "https://pypi.org/project/api-telegraph" # Вуаля!
 ```
 
 ## Example (Примеры)
@@ -16,7 +16,7 @@ pip install "git+https://github.com/game-hipe/telegraph-api.git" # Вуаля!
 from telegraph_api import Telegraph
 
 with Telegraph() as client:
-    account = client.create_account(
+    account = client.create_account( # Создали аккаунт!
         short_name="GH",
         author_name="GameHipe",
         author_url="https://github.com/game-hipe",
@@ -38,7 +38,7 @@ from telegraph_api import AsyncTelegraph
 
 async def main():
     async with AsyncTelegraph() as client:
-        account = await client.create_account(
+        account = await client.create_account( # Создали аккаунт!
             short_name="GH",
             author_name="GameHipe",
             author_url="https://github.com/game-hipe",
@@ -52,4 +52,4 @@ async def main():
 asyncio.run(main())
 ```
 
-Ебашьте!
+Всё идеальное в простом!

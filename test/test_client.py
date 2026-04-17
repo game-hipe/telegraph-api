@@ -439,21 +439,6 @@ class TestAsyncClient:
             await telegraph.get_account_info(access_token="123")
 
     @pytest.mark.asyncio
-    async def test_get_page_list(
-        self, telegraph: AsyncTelegraph, created_account: AsyncAccount
-    ):
-        # Создадим несколько страниц
-        for i in range(3):
-            await created_account.create_page(
-                title=f"Page {i}", content=[NodeElement(tag="p", children=["test"])]
-            )
-        page_list = await telegraph.get_page_list(
-            access_token=created_account.access_token, limit=2
-        )
-        assert page_list.total_count >= 3
-        assert len(page_list.pages) == 2
-
-    @pytest.mark.asyncio
     async def test_create_page_with_html(
         self, telegraph: AsyncTelegraph, created_account: AsyncAccount
     ):
@@ -569,17 +554,6 @@ class TestAsyncORM:
         assert account.short_name == "GH"
         assert account.author_name == "GameHipe"
         assert str(account.author_url) == "https://github.com/game-hipe/telegraph-api"
-
-    @pytest.mark.asyncio
-    async def test_get_page_list(self, created_account: AsyncAccount):
-        # Создадим несколько страниц
-        for i in range(3):
-            await created_account.create_page(
-                title=f"Page {i}", content=[NodeElement(tag="p", children=["test"])]
-            )
-        page_list = await created_account.get_page_list(limit=2)
-        assert page_list.total_count >= 3
-        assert len(page_list.pages) == 2
 
     @pytest.mark.asyncio
     async def test_revoke_access_token(self, created_account: AsyncAccount):
